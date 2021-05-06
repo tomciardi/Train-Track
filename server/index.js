@@ -70,6 +70,19 @@ app.delete("/delete/:id", (req, res) => {
   });
 });
 
+app.post("/signup", (req, res) => {
+    const username = req.body.username;
+    const password = req.body.password;
+    console.log(username)
+    db.query("INSERT INTO users (username, password) VALUES (?,?)",
+    [username, password], 
+    (err, result) => {
+        if(err) {
+            console.log(err)
+        }
+    });
+});
+
 app.get("/companies", (req, res) => {
     db.query("SELECT * FROM company", (err, result) => {
       if (err) {
