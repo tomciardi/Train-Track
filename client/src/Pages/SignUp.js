@@ -21,9 +21,8 @@ export default function SignUp() {
         try {
             setError("")
             setLoading(true)
-            console.log(emailRef)
             Axios.post("http://localhost:3001/signup", {
-                username: emailRef.current.value,
+                email: emailRef.current.value,
                 password: passwordRef.current.value,
             }).then((response) => {
                 console.log(response);

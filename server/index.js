@@ -71,14 +71,33 @@ app.delete("/delete/:id", (req, res) => {
 });
 
 app.post("/signup", (req, res) => {
-    const username = req.body.username;
+    const email = req.body.email;
     const password = req.body.password;
-    console.log(username)
-    db.query("INSERT INTO users (username, password) VALUES (?,?)",
-    [username, password], 
+    
+    db.query("INSERT INTO users (email, password) VALUES (?,?)",
+    [email, password], 
     (err, result) => {
         if(err) {
             console.log(err)
+        }
+    });
+});
+
+app.post("/login", (req, res) => {
+    const email = req.body.email;
+    const password = req.body.password;
+    
+    db.query("SELECT * FROM users WHERE email = ? AND password = ?",
+    [email, password], 
+    (err, result) => {
+        if(err) {
+            res.send({err: err})
+        }
+        if(result.length > 0) {
+            res.send(result);
+        }
+        else {
+            res.send({message: "Wrong email/password combination"});
         }
     });
 });
