@@ -102,6 +102,20 @@ app.post("/login", (req, res) => {
     });
 });
 
+app.post("/addcompany", (req, res) => {
+    const name = req.body.name;
+    const address = req.body.address;
+    
+    db.query("INSERT INTO company (name, address) VALUES (?,?)",
+    [name, address], 
+    (err, result) => {
+        if(err) {
+            console.log(err)
+        }
+    });
+});
+
+
 app.get("/companies", (req, res) => {
     db.query("SELECT * FROM company", (err, result) => {
       if (err) {

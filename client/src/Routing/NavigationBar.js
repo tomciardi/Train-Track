@@ -8,7 +8,7 @@ const NavigationBar = () => {
                 <Navbar.Brand href="/">Train-Track</Navbar.Brand>
                 <Nav className="container-fluid">
                     <Nav.Link href="/">Home</Nav.Link>
-                    <Nav.Link href="/tutorial">Tutorial</Nav.Link>
+                    <Nav.Link href="/forms">Forms</Nav.Link>
                     <Nav className = "ml-auto">
                         <Nav.Link href="/signup">Sign Up</Nav.Link>
                         <Nav.Link href="/login">Login</Nav.Link>
