@@ -3,8 +3,10 @@ import { Alert, Button, Card, Container, Form } from 'react-bootstrap'
 import Axios from 'axios'
 
 export default function FormRailroad() {
-    const nameRef = useRef()
-    const addressRef = useRef()
+    const distanceRef = useRef()
+    const weightRef = useRef()
+    const rail_classRef = useRef()
+    const ownerRef = useRef()
     const [error, setError] = useState("")
     const [success, setSuccess] = useState("")
     const [loading, setLoading] = useState(false)
@@ -15,18 +17,22 @@ export default function FormRailroad() {
         try {
             setError("")
             setLoading(true)
-            Axios.post("http://localhost:3001/addcompany", {
-                name: nameRef.current.value,
-                address: addressRef.current.value,
+            Axios.post("http://localhost:3001/addrailroad", {
+                distance: distanceRef.current.value,
+                weight: weightRef.current.value,
+                rail_class: rail_classRef.current.value,
+                owner: ownerRef.current.value,
             }).then((response) => {
                 console.log(response)
             });
             setSuccess("Successfully added to database")
-            nameRef.current.value = ""
-            addressRef.current.value = ""
+            distanceRef.current.value = ""
+            weightRef.current.value = ""
+            rail_classRef.current.value = ""
+            ownerRef.current.value = ""
             setLoading(false)
         } catch {
-            setError("Failed to add company")
+            setError("Failed to add railroad")
         }
     }
 
@@ -36,17 +42,25 @@ export default function FormRailroad() {
                 <div className="w-100" style={{ maxWidth: "400px" }}>
                     <Card>
                         <Card.Body>
-                            <h2 className="text-center mb-4">Company Form</h2>
+                            <h2 className="text-center mb-4">Railroad Form</h2>
                             {error && <Alert variant="danger">{error}</Alert>}
                             {success && <Alert variant="success">{success}</Alert>}
                             <Form onSubmit={handleSubmit}>
-                                <Form.Group id="name">
-                                    <Form.Label>Name</Form.Label>
-                                    <Form.Control ref={nameRef} required />
+                                <Form.Group id="distance">
+                                    <Form.Label>Distance</Form.Label>
+                                    <Form.Control ref={distanceRef} required />
                                 </Form.Group>
-                                <Form.Group id="address">
-                                    <Form.Label>Address</Form.Label>
-                                    <Form.Control ref={addressRef} required />
+                                <Form.Group id="weight">
+                                    <Form.Label>Weight</Form.Label>
+                                    <Form.Control ref={weightRef} required />
+                                </Form.Group>
+                                <Form.Group id="rail_class">
+                                    <Form.Label>Rail Class</Form.Label>
+                                    <Form.Control ref={rail_classRef} required />
+                                </Form.Group>
+                                <Form.Group id="owner">
+                                    <Form.Label>Owner</Form.Label>
+                                    <Form.Control ref={ownerRef} required />
                                 </Form.Group>
                                 <Button disabled={loading} className="w-100" type="submit">
                                     Add

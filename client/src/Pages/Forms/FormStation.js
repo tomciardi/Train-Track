@@ -15,7 +15,7 @@ export default function FormStation() {
         try {
             setError("")
             setLoading(true)
-            Axios.post("http://localhost:3001/addcompany", {
+            Axios.post("http://localhost:3001/addstation", {
                 name: nameRef.current.value,
                 address: addressRef.current.value,
             }).then((response) => {
@@ -36,7 +36,7 @@ export default function FormStation() {
                 <div className="w-100" style={{ maxWidth: "400px" }}>
                     <Card>
                         <Card.Body>
-                            <h2 className="text-center mb-4">Company Form</h2>
+                            <h2 className="text-center mb-4">Station Form</h2>
                             {error && <Alert variant="danger">{error}</Alert>}
                             {success && <Alert variant="success">{success}</Alert>}
                             <Form onSubmit={handleSubmit}>

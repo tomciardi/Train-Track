@@ -115,6 +115,47 @@ app.post("/addcompany", (req, res) => {
     });
 });
 
+app.post("/addtrain", (req, res) => {
+    const model = req.body.model;
+    const seats = req.body.seats;
+    const owner = req.body.owner;
+    
+    db.query("INSERT INTO train (model, seats, owner) VALUES (?,?,?)",
+    [model, seats, owner], 
+    (err, result) => {
+        if(err) {
+            console.log(err)
+        }
+    });
+});
+
+app.post("/addstation", (req, res) => {
+    const name = req.body.name;
+    const address = req.body.address;
+    
+    db.query("INSERT INTO station (name, address) VALUES (?,?)",
+    [name, address], 
+    (err, result) => {
+        if(err) {
+            console.log(err)
+        }
+    });
+});
+
+app.post("/addrailroad", (req, res) => {
+    const distance = req.body.distance;
+    const weight = req.body.weight;
+    const rail_class = req.body.rail_class;
+    const owner = req.body.owner;
+    
+    db.query("INSERT INTO railroad (distance, weight, class, owner) VALUES (?,?,?,?)",
+    [distance, weight, rail_class, owner], 
+    (err, result) => {
+        if(err) {
+            console.log(err)
+        }
+    });
+});
 
 app.get("/companies", (req, res) => {
     db.query("SELECT * FROM company", (err, result) => {
@@ -134,6 +175,26 @@ app.get("/stations", (req, res) => {
         res.send(result);
         }
     });
+});
+
+app.get("/trains", (req, res) => {
+  db.query("SELECT * FROM train", (err, result) => {
+      if (err) {
+      console.log(err);
+      } else {
+      res.send(result);
+      }
+  });
+});
+
+app.get("/railroads", (req, res) => {
+  db.query("SELECT * FROM railroad", (err, result) => {
+      if (err) {
+      console.log(err);
+      } else {
+      res.send(result);
+      }
+  });
 });
 
 app.listen(3001, () => {

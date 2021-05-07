@@ -6,6 +6,7 @@ import Tutorial from '../Pages/Tutorial';
 import Dashboard from '../Pages/Dashboard'
 import SignUp from '../Pages/SignUp'
 import Login from '../Pages/Login'
+import Profile from '../Pages/Profile'
 import Forms from '../Pages/Forms/Forms'
 import FormCompany from '../Pages/Forms/FormCompany'
 import FormStation from '../Pages/Forms/FormStation'
@@ -21,6 +22,7 @@ export default class Routes extends Component {
                 <Route exact path="/tutorial" component={ Tutorial }/>
                 <Route exact path="/signup" component={ SignUp }/>
                 <Route exact path="/login" component={ Login }/>
+                <Route exact path="/profile" component={ Profile }/>
                 <Route exact path="/forms" component={ Forms }/>
                 <Route exact path="/formcompany" component={ FormCompany }/>
                 <Route exact path="/formstation" component={ FormStation }/>

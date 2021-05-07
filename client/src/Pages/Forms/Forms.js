@@ -1,4 +1,5 @@
 import { Card, Container, Nav } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 
 export default function Forms() {
     return (
@@ -9,10 +10,10 @@ export default function Forms() {
                         <Card.Body>
                             <h2 className="text-center mb-4">Form Selection</h2>
                             <Nav className="flex-column">
-                                <Nav.Link href="/formcompany">Company</Nav.Link>
-                                <Nav.Link href="/formstation">Station</Nav.Link>
-                                <Nav.Link href="/formtrain">Train</Nav.Link>
-                                <Nav.Link href="/formrailroad">Railroad</Nav.Link>
+                                <Nav.Link as={Link} to="/formcompany">Company</Nav.Link>
+                                <Nav.Link as={Link} to="/formstation">Station</Nav.Link>
+                                <Nav.Link as={Link} to="/formtrain">Train</Nav.Link>
+                                <Nav.Link as={Link} to="/formrailroad">Railroad</Nav.Link>
                             </Nav>
                         </Card.Body>
                     </Card>

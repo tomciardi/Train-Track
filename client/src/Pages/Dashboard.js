@@ -7,13 +7,17 @@ export default function Dashboard() {
 
     const [companyList, setCompanyList] = useState([]);
     const [stationList, setStationList] = useState([]);
+    const [trainList, setTrainList] = useState([]);
+    const [railroadList, setRailroadList] = useState([]);
     const [queried, setQueried] = useState(false);
     const [table, setTable] = useState("Choose Table");
     const [options, setOptions] = useState([]);
 
     const tableOptions = [
         { value: 'company', label: 'company' },
-        { value: 'station', label: 'station '}
+        { value: 'station', label: 'station '},
+        { value: 'train', label: 'train' },
+        { value: 'railroad', label: 'railroad' },
     ]
 
     const tableSelect = (event) => {
@@ -24,6 +28,10 @@ export default function Dashboard() {
                 return getCompanies()
             case 'station':
                 return getStations()
+            case 'train':
+                return getTrains()
+            case 'railroad':
+                return getRailroads()
             default:
         }
     }
@@ -42,6 +50,10 @@ export default function Dashboard() {
                 return <QueryCompanyTable/>
             case "station":
                 return <QueryStationTable/>
+            case "train":
+                return <QueryTrainTable/>
+            case "railroad":
+                return <QueryRailroadTable/>
             default:
                 return <></>
         }
@@ -117,6 +129,86 @@ export default function Dashboard() {
             </thead>
             <tbody>
                 { stationList.map(renderStation)}
+            </tbody>
+        </Table>
+        )
+    }
+
+    const getTrains = () => {
+        Axios.get("http://localhost:3001/trains").then((response) => {
+            setTrainList(response.data)
+            console.log(trainList)
+        });
+        setTable("train")
+        if(trainList.length > 0)
+            getColumns(Object.keys(trainList[0]))
+    };
+
+    const renderTrain = (train, index) => {
+        return (
+            <tr key={index}>
+                <td>{train.train_id}</td>
+                <td>{train.model}</td>
+                <td>{train.seats}</td>
+                <td>{train.owner}</td>
+            </tr>
+        )
+    }
+
+    const QueryTrainTable = () => {
+        return (
+            <Table striped condensed hover variant="dark">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Model</th>
+                    <th>Seats</th>
+                    <th>Owner</th>
+                </tr>
+            </thead>
+            <tbody>
+                { trainList.map(renderTrain)}
+            </tbody>
+        </Table>
+        )
+    }
+
+    const getRailroads = () => {
+        Axios.get("http://localhost:3001/railroads").then((response) => {
+            setRailroadList(response.data)
+            console.log(railroadList)
+        });
+        setTable("railroad")
+        if(railroadList.length > 0)
+            getColumns(Object.keys(railroadList[0]))
+    };
+
+    const renderRailroad = (railroad, index) => {
+        return (
+            <tr key={index}>
+                <td>{railroad.r_id}</td>
+                <td>{railroad.distance}</td>
+                <td>{railroad.weight}</td>
+                <td>{railroad.rail_class}</td>
+                <td>{railroad.owner}</td>
+            </tr>
+        )
+    }
+
+    const QueryRailroadTable = () => {
+        return (
+            <Table striped condensed hover variant="dark">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Distance</th>
+                    <th>Weight</th>
+                    <th>Class</th>
+                    <th>Owner</th>
+                </tr>
+            </thead>
+            <tbody>
+                { railroadList.map(renderRailroad)}
             </tbody>
         </Table>
         )

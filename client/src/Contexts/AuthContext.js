@@ -33,6 +33,10 @@ export function AuthProvider({ children }) {
         setCurrentUser(email)
     }
 
+    function logout() {
+        setCurrentUser()
+    }
+
     useEffect(() => {
     }, [])
 
@@ -40,6 +44,7 @@ export function AuthProvider({ children }) {
         currentUser,
         login,
         signup,
+        logout
     }
 
     return (
