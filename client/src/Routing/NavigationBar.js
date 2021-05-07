@@ -1,4 +1,4 @@
-import { Nav, Navbar, NavLink } from 'react-bootstrap'
+import { Nav, Navbar } from 'react-bootstrap'
 import { Link } from 'react-router-dom';
 import { useAuth } from '../Contexts/AuthContext'
 import { withRouter } from 'react-router-dom'
@@ -15,6 +15,7 @@ const NavigationBar = () => {
                     <Navbar.Brand href="/">Train-Track</Navbar.Brand>
                     <Nav className="container-fluid">
                         <Nav.Link href="/">Home</Nav.Link>
+                        <Nav.Link href="/dashboard">Dashboard</Nav.Link>
                         <Nav.Link href="/forms">Forms</Nav.Link>
                         <Nav className = "ml-auto">
                             { !currentUser && <Nav.Link as={Link} to="/signup">Sign Up</Nav.Link> }
