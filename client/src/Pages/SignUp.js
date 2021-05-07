@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react'
 import { Alert, Button, Card, Container, Form } from 'react-bootstrap'
 import { Link, useHistory } from 'react-router-dom'
-import Axios from 'axios'
+import { useAuth } from '../Contexts/AuthContext'
 
 export default function SignUp() {
     const emailRef = useRef()
@@ -10,6 +10,7 @@ export default function SignUp() {
     const [error, setError] = useState("")
     const [loading, setLoading] = useState(false)
     const history = useHistory()
+    const { signup } = useAuth()
 
     async function handleSubmit(e) {
         e.preventDefault()
@@ -21,12 +22,7 @@ export default function SignUp() {
         try {
             setError("")
             setLoading(true)
-            Axios.post("http://localhost:3001/signup", {
-                email: emailRef.current.value,
-                password: passwordRef.current.value,
-            }).then((response) => {
-                console.log(response);
-            });
+            await signup(emailRef.current.value, passwordRef.current.value)
             history.push("/")
         } catch {
             setError("Failed to create account")

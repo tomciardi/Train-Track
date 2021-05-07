@@ -5,7 +5,21 @@ import Axios from "axios";
 export default function Home() {
 
     const [companyList, setCompanyList] = useState([]);
+    const [stationList, setStationList] = useState([]);
     const [queried, setQueried] = useState(false)
+    const [table, setTable] = useState("Choose Table")
+
+    function queryTable() {
+        console.log(table)
+        switch(table) {
+            case "Company":
+                return <QueryCompanyTable/>
+            case "Station":
+                return <QueryStationTable/>
+            default:
+                return <></>
+        }
+    }
 
     const getCompanies = () => {
         Axios.get("http://localhost:3001/companies").then((response) => {
@@ -13,36 +27,69 @@ export default function Home() {
             console.log(companyList)
         });
         setQueried(true)
+        setTable("Company")
     };
 
-    const QueryTable = () => {
+    const renderCompany = (company, index) => {
+        return (
+            <tr key={index}>
+                <td>{company.c_id}</td>
+                <td>{company.name}</td>
+                <td>{company.address}</td>
+            </tr>
+        )
+    }
+
+    const QueryCompanyTable = () => {
         return (
             <Table striped condensed hover variant="dark">
             <thead>
-                <RenderTable />
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Address</th>
+                </tr>
             </thead>
             <tbody>
-                
+                { companyList.map(renderCompany)}
             </tbody>
         </Table>
         )
     }
 
-    function RenderTable(list) {
-        const keys = Object.keys(list)
+    const getStations = () => {
+        Axios.get("http://localhost:3001/stations").then((response) => {
+            setStationList(response.data)
+            console.log(stationList)
+        });
+        setQueried(true)
+        setTable("Station")
+    };
 
-        console.log(keys)
-        let keys_headers = []
-
-        for(let i = 0; i < keys.length; i++) {
-            keys_headers.push(<th>{keys[0]}</th>)
-        }
-
-        console.log(keys_headers)
+    const renderStation = (station, index) => {
         return (
-            <tr>
-                { keys_headers }
+            <tr key={index}>
+                <td>{station.station_id}</td>
+                <td>{station.name}</td>
+                <td>{station.address}</td>
             </tr>
+        )
+    }
+
+    const QueryStationTable = () => {
+        return (
+            <Table striped condensed hover variant="dark">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Address</th>
+                </tr>
+            </thead>
+            <tbody>
+                { stationList.map(renderStation)}
+            </tbody>
+        </Table>
         )
     }
 
@@ -52,13 +99,14 @@ export default function Home() {
                 <div className="w-100" style={{ maxWidth: "800px" }}>
                     <Card>
                         <Card.Body>
-                            <h2 className="text-center mb-4">Choose Table</h2>
+                            <h2 className="text-center mb-4">{table}</h2>
                             <DropdownButton title="Select Table">
                                 <Dropdown.Item onClick={getCompanies}>Company</Dropdown.Item>
+                                <Dropdown.Item onClick={getStations}>Station</Dropdown.Item>
                             </DropdownButton>
                         </Card.Body>
                     </Card>
-                    {queried && <QueryTable />}
+                        {queried && queryTable()}
                 </div>
             </Container>
         </>

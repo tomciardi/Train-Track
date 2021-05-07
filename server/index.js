@@ -126,6 +126,16 @@ app.get("/companies", (req, res) => {
     });
   });
 
+app.get("/stations", (req, res) => {
+    db.query("SELECT * FROM station", (err, result) => {
+        if (err) {
+        console.log(err);
+        } else {
+        res.send(result);
+        }
+    });
+});
+
 app.listen(3001, () => {
   console.log("Yey, your server is running on port 3001");
 });
